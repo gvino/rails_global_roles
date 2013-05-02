@@ -35,8 +35,8 @@ RUBY
 
       roles = ::GlobalRoles::Generators::InstallGenerator::DEFAULT_ROLES
       roles = Regexp.escape roles.inspect
-      it { should contain /class User < ActiveRecord::Base\n  ROLES = #{roles}\n/ }
-      it { should contain /ROLES = #{roles}\n  set_global_roles!\n/ }
+      it { should contain /ROLES = #{roles}\n/ }
+      it { should contain /ROLES = #{roles}\n  setup_global_roles!\n/ }
     end
 
     describe 'migration file' do
@@ -70,8 +70,8 @@ RUBY
       roles = [:role1, :role2]
       roles = Regexp.escape roles.inspect
 
-      it { should contain /class User < ActiveRecord::Base\n  ROLES = #{roles}\n/ }
-      it { should contain /ROLES = #{roles}\n  set_global_roles!\n/ }
+      it { should contain /ROLES = #{roles}\n/ }
+      it { should contain /ROLES = #{roles}\n  setup_global_roles!\n/ }
     end
 
   end

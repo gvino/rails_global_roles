@@ -19,7 +19,7 @@ module GlobalRoles
 
   # Global roles
   ROLES = #{roles_list}
-  set_global_roles!
+  setup_global_roles!
 
 RUBY
         end
