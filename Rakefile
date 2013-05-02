@@ -27,11 +27,17 @@ RSpec::Core::RakeTask.new(:generators) do |task|
   task.pattern = "spec/generators/**/*_spec.rb"
 end
 
+RSpec::Core::RakeTask.new(:global_roles) do |task|
+  task.pattern = "spec/global_roles/**/*_spec.rb"
+end
+
 task :default => :spec
 
 desc "Run all specs"
 task "spec" do
   Rake::Task['generators'].invoke
   return_code1 = $?.exitstatus
-  fail if return_code1 != 0
+  Rake::Task['global_roles'].invoke
+  return_code2 = $?.exitstatus
+  fail if return_code1 != 0 || return_code2 != 0
 end
