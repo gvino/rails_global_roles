@@ -83,7 +83,15 @@ describe User, "with installed global role" do
     end
   end
 
-  describe "should has question methods" do
+  describe "should has query methods" do
+    before (:all) { @user = User.new }
+    subject { @user }
+
+    User::ROLES.each do |r|
+      it { should respond_to("global_#{r}?".to_sym) }
+    end
+    it { @user.global_admin?.should be_false }
+    it { @user.global_regular?.should be_true }
   end
 
 end

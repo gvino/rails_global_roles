@@ -17,6 +17,11 @@ module GlobalRoles
         end
       end
 
+      self::ROLES.each do |r|
+        define_method("global_#{r}?".to_sym) do
+          global_role == r
+        end
+      end
     end
   end
 
