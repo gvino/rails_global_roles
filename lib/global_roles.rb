@@ -13,7 +13,7 @@ module GlobalRoles
 
       if default = options[:default]
         after_initialize do
-          self.role = default unless role? || persisted?
+          self.global_role = default unless global_role? || persisted?
         end
       end
 

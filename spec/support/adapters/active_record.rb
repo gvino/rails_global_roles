@@ -17,7 +17,7 @@ class AccessibleUser < ActiveRecord::Base
   setup_global_roles!
 
   attr_accessible :login
-  attr_accessible :role, :as => :admin
+  attr_accessible :global_role, :as => :admin
 end
 
 # User wit default role :admin
@@ -26,5 +26,5 @@ class AdminUser < ActiveRecord::Base
   setup_global_roles! :default => :admin
 
   attr_accessible :login
-  attr_accessible :role, :as => :admin
+  attr_accessible :global_role, :as => :admin
 end

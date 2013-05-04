@@ -2,41 +2,41 @@ module GlobalRoles
   module Methods
     extend ::ActiveSupport::Concern
 
-    def role
-      @role ||= self.class::ROLES[self.role_id]
+    def global_role
+      @global_role ||= self.class::ROLES[self.global_role_id]
     end
 
-    def role_id
-      self.read_attribute :role
+    def global_role_id
+      self.read_attribute :global_role
     end
 
-    def reload_role
-      @role = nil
+    def reload_global_role
+      @global_role = nil
     end
 
-    def role=(name)
-      write_attribute(:role, self.class::role_id_for_name(name))
+    def global_role=(name)
+      write_attribute(:global_role, self.class::global_role_id_for_name(name))
     end
 
-    def role_id=(id)
+    def global_role_id=(id)
       unless id.is_a? Fixnum
         raise ArgumentError, "Expected a Fixnum, but got \#{id.inspect}"
       end
-      @role = nil
-      write_attribute(:role, id)
+      @global_role = nil
+      write_attribute(:global_role, id)
     end
 
     module ClassMethods
-      def values_for_role
+      def values_for_global_role
         self::ROLES
       end
 
-      def role_id_for_name(r)
+      def global_role_id_for_name(r)
         r.is_a?(Integer) ? r : self::ROLES.index(r.to_sym)
       end
 
-      def with_role(r)
-        self.send(:where, :role => role_id_for_name(r))
+      def with_global_role(r)
+        self.send(:where, :global_role => global_role_id_for_name(r))
       end
     end
 

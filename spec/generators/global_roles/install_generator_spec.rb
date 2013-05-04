@@ -44,7 +44,7 @@ RUBY
 
       it { should be_a_migration }
       it { should contain "def change" }
-      it { should contain "add_column :users, :role, :integer, :null => :false, :default => 0" }
+      it { should contain "add_column :users, :global_role, :integer, :null => :false, :default => 0" }
     end
   end
 

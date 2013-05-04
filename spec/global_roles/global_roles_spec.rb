@@ -7,10 +7,10 @@ describe User, "with installed global role" do
     describe "should have class methods" do
       subject { User }
 
-      it { should respond_to(:values_for_role) }
-      it { User.values_for_role.should be_eql(User::ROLES) }
-      it { should respond_to(:with_role).with(1).arguments }
-      it { should respond_to(:role_id_for_name).with(1).arguments }
+      it { should respond_to(:values_for_global_role) }
+      it { User.values_for_global_role.should be_eql(User::ROLES) }
+      it { should respond_to(:with_global_role).with(1).arguments }
+      it { should respond_to(:global_role_id_for_name).with(1).arguments }
 
     end
 
@@ -19,10 +19,10 @@ describe User, "with installed global role" do
     end
 
     context "should find by" do
-      describe "role id" do
+      describe "global role id" do
         before(:all) do
-          @with_role0 = User.with_role(0)
-          @with_role1 = User.with_role(1)
+          @with_role0 = User.with_global_role(0)
+          @with_role1 = User.with_global_role(1)
         end
 
 
@@ -35,8 +35,8 @@ describe User, "with installed global role" do
 
       describe "role name" do
         before(:all) do
-          @with_role_regular = User.with_role(:regular)
-          @with_role_admin   = User.with_role(:admin)
+          @with_role_regular = User.with_global_role(:regular)
+          @with_role_admin   = User.with_global_role(:admin)
         end
 
         it { @with_role_regular.count.should be_eql(3) }
@@ -47,28 +47,28 @@ describe User, "with installed global role" do
 
   context "update_attributes" do
     context "as admin" do
-      context "should set correct role" do
+      context "should set correct global role" do
         describe "by id" do
 
           # FIXME Fix this spec to use `update_attributes`
           before (:each) do
             @user = AccessibleUser.first
 #            @user.update_attributes(:role => 1, :as => :admin)
-            @user.role = 1; @user.save!
+            @user.global_role = 1; @user.save!
           end
 
-          it { @user.class::role_id_for_name(@user.role).should be_eql(1) }
-          it { @user.role.should be_eql(:admin) }
+          it { @user.class::global_role_id_for_name(@user.global_role).should be_eql(1) }
+          it { @user.global_role.should be_eql(:admin) }
         end
 
         describe "by name" do
           before (:each) do
             @user = AccessibleUser.first
-            @user.role = :moderator; @user.save!
+            @user.global_role = :moderator; @user.save!
           end
 
-          it { @user.role_id.should be_eql(2) }
-          it { @user.role.should be_eql(:moderator) }
+          it { @user.global_role_id.should be_eql(2) }
+          it { @user.global_role.should be_eql(:moderator) }
         end
       end
     end
@@ -79,7 +79,11 @@ describe User, "with installed global role" do
       before (:all) { @user = AdminUser.new }
       subject { @user }
 
-      it { @user.role.should be_eql(:admin) }
+      it { @user.global_role.should be_eql(:admin) }
     end
   end
+
+  describe "should has question methods" do
+  end
+
 end
