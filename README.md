@@ -1,7 +1,11 @@
 # GlobalRoles
 
-_**Disclamer:** My english is awful, so feel free to send me 
+_**Disclaimer #1:** My english is awful, so feel free to send me 
 corrections of this text._
+
+_**Disclaimer #2:** If you like this project, please 
+[![endorse](https://api.coderwall.com/gvino/endorsecount.png)](https://coderwall.com/gvino) 
+me on coderwall._
 
 This is a simple gem to add global role to any model in your
 Ruby on Rails application.
