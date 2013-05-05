@@ -12,8 +12,9 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/gvino/rails_global_roles"
   s.summary     = "Simple roles gem"
   s.description = "Simple gem to provide global roles for ActiveRecrod models without using of another models"
+  s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.require_paths = ["lib"]
 
   s.add_development_dependency "activerecord", ">= 3.2.0"
