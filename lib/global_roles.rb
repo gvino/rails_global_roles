@@ -22,6 +22,13 @@ module GlobalRoles
           global_role == r
         end
       end
+
+      self.class_eval %(
+        scope :with_global_role,
+          proc { |r|
+            where(:global_role => #{self}::global_role_id_for(r))
+          }
+      )
     end
   end
 

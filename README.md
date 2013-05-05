@@ -73,6 +73,10 @@ use `Model.with_global_role` method:
 ## TODO
 
 - [x] Add validation to model
-- [ ] Make `with_global_role` method a scope
+- [x] Make `with_global_role` method a scope
 - [ ] Add possibility to set default role through generator
 - [ ] **Make specs readable**
+
+## License
+
+This code is distributed under terms of MIT-LICENSE

@@ -39,10 +39,6 @@ module GlobalRoles
         (r.is_a? Integer) ? r : self::ROLES.index(r)
       end
 
-      def with_global_role(r)
-        self.send(:where, :global_role => global_role_id_for(r))
-      end
-
       private
       def valid_role?(r)
         if (r.is_a? Integer)
