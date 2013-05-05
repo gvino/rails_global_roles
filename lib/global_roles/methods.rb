@@ -15,13 +15,14 @@ module GlobalRoles
     end
 
     def global_role=(name)
-      write_attribute(:global_role, self.class::global_role_id_for_name(name))
+      write_attribute(:global_role, self.class::global_role_id_for(name))
     end
 
     def global_role_id=(id)
       unless id.is_a? Fixnum
         raise ArgumentError, "Expected a Fixnum, but got \#{id.inspect}"
       end
+      id = self.class::global_role_id_for(id)
       @global_role = nil
       write_attribute(:global_role, id)
     end
@@ -31,12 +32,27 @@ module GlobalRoles
         self::ROLES
       end
 
-      def global_role_id_for_name(r)
-        r.is_a?(Integer) ? r : self::ROLES.index(r.to_sym)
+      def global_role_id_for(r)
+        if !valid_role?(r)
+          raise ArgumentError, "Unsupported value for `global_role': #{r.inspect}"
+        end
+        (r.is_a? Integer) ? r : self::ROLES.index(r)
       end
 
       def with_global_role(r)
-        self.send(:where, :global_role => global_role_id_for_name(r))
+        self.send(:where, :global_role => global_role_id_for(r))
+      end
+
+      private
+      def valid_role?(r)
+        if (r.is_a? Integer)
+          if !(0...self::ROLES.size).include?(r)
+            return false
+          end
+        else
+          return self::ROLES.include?(r.respond_to?(:to_sym) ? r.to_sym : r)
+        end
+        true
       end
     end
 

@@ -10,7 +10,7 @@ describe User, "with installed global role" do
       it { should respond_to(:values_for_global_role) }
       it { User.values_for_global_role.should be_eql(User::ROLES) }
       it { should respond_to(:with_global_role).with(1).arguments }
-      it { should respond_to(:global_role_id_for_name).with(1).arguments }
+      it { should respond_to(:global_role_id_for).with(1).arguments }
 
     end
 
@@ -46,6 +46,14 @@ describe User, "with installed global role" do
   end
 
   context "update_attributes" do
+    describe "shouldn't set invalid roles" do
+      before (:each) { @user = User.new }
+      subject { @user }
+
+      it { expect {@user.global_role = 9 }.to raise_error(ArgumentError) }
+      it { expect {@user.global_role = :looser }.to raise_error(ArgumentError) }
+    end
+
     context "as admin" do
       context "should set correct global role" do
         describe "by id" do
@@ -57,7 +65,7 @@ describe User, "with installed global role" do
             @user.global_role = 1; @user.save!
           end
 
-          it { @user.class::global_role_id_for_name(@user.global_role).should be_eql(1) }
+          it { @user.class::global_role_id_for(@user.global_role).should be_eql(1) }
           it { @user.global_role.should be_eql(:admin) }
         end
 
