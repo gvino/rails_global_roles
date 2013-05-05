@@ -15,6 +15,7 @@ module GlobalRoles
     end
 
     def global_role=(name)
+      @global_role = nil
       write_attribute(:global_role, self.class::global_role_id_for(name))
     end
 

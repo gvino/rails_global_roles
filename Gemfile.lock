@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    global_roles (0.0.1)
+    global_roles (0.0.2)
 
 GEM
   remote: http://rubygems.org/
