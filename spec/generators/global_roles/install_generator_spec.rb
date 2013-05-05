@@ -33,7 +33,7 @@ RUBY
     describe model_path do
       subject { file model_path }
 
-      roles = ::GlobalRoles::Generators::InstallGenerator::DEFAULT_ROLES
+      roles = ::GlobalRoles::Generators::InstallGenerator::DEFAULT_ROLES.map(&:to_sym)
       roles = Regexp.escape roles.inspect
       it { should contain /ROLES = #{roles}\n/ }
       it { should contain /ROLES = #{roles}\n  setup_global_roles!\n/ }
@@ -72,6 +72,50 @@ RUBY
 
       it { should contain /ROLES = #{roles}\n/ }
       it { should contain /ROLES = #{roles}\n  setup_global_roles!\n/ }
+    end
+
+    describe 'migration file' do
+      subject { migration_file('db/migrate/add_global_role_to_users.rb') }
+
+      it { should be_a_migration }
+      it { should contain "def change" }
+      it { should contain "add_column :users, :global_role, :integer, :null => :false, :default => 0" }
+    end
+
+  end
+
+  context "Specified <model> name and list of roles with default role" do
+    model_path = "app/models/user.rb"
+    before(:all) { arguments %w(User role1 role2:default) }
+
+    before do
+      capture(:stdout) do
+        generator.create_file model_path do
+<<-RUBY
+class User < ActiveRecord::Base
+end
+RUBY
+        end
+      end
+      require File.join(destination_root, model_path)
+      run_generator
+    end
+
+    describe model_path do
+      subject { file model_path }
+      roles = [:role1, :role2]
+      roles = Regexp.escape roles.inspect
+
+      it { should contain /ROLES = #{roles}\n/ }
+      it { should contain /ROLES = #{roles}\n  setup_global_roles! default: :role2\n/ }
+    end
+
+    describe 'migration file' do
+      subject { migration_file('db/migrate/add_global_role_to_users.rb') }
+
+      it { should be_a_migration }
+      it { should contain "def change" }
+      it { should contain "add_column :users, :global_role, :integer, :null => :false, :default => 1" }
     end
 
   end

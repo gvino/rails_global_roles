@@ -11,7 +11,7 @@ module GlobalRoles
       self::ROLES.freeze
       include GlobalRoles::Methods
 
-      if default = options[:default]
+      if default = options[:default] || 0
         after_initialize do
           self.global_role = default unless global_role? || persisted?
         end

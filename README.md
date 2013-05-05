@@ -19,6 +19,14 @@ after model name, e.g.
 
     $ rails generate global_roles:install User role1 role2
 
+If you want to specify role that will be default for model you 
+should mark it as default in roles list:
+
+    $ rails generate global_roles:install User role1 role2:default
+
+**Be careful! If you don't specify default role, it will be first 
+role in list.**
+
 After this you will see something like this in your model:
 
 ```ruby
@@ -74,7 +82,7 @@ use `Model.with_global_role` method:
 
 - [x] Add validation to model
 - [x] Make `with_global_role` method a scope
-- [ ] Add possibility to set default role through generator
+- [x] Add possibility to set default role through generator
 - [ ] **Make specs readable**
 
 ## License

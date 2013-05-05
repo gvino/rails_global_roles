@@ -14,6 +14,10 @@ module ActiveRecord
         File.join("app", "models", "#{file_path}.rb")
       end
 
+      def default_value
+        args.first == -1 ? 0 : args.first
+      end
+
     end
   end
 end

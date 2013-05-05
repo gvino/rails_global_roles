@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = GlobalRoles::VERSION
   s.authors     = ["George Vinogradov"]
   s.email       = ["g-vino@yandex.ru", "g.vinogradov@itima.ru"]
-  s.homepage    = "http://github.com/gvino/global_roles"
+  s.homepage    = "http://github.com/gvino/rails_global_roles"
   s.summary     = "Simple roles gem"
   s.description = "Simple gem to provide global roles for ActiveRecrod models without using of another models"
 

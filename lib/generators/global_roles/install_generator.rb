@@ -6,10 +6,11 @@ module GlobalRoles
     class InstallGenerator < Rails::Generators::NamedBase
       Rails::Generators::ResourceHelpers
 
-      DEFAULT_ROLES = [:regular, :admin, :moderator]
+      DEFAULT_ROLES = %w(regular admin moderator)
 
       source_root File.expand_path('../templates', __FILE__)
-      argument :roles, :type => :array, :default => [], :banner => "role1 role2 role3 ..."
+      argument :roles, :type => :array, :default => DEFAULT_ROLES,
+                       :banner => "role1[:default] role2[:default] role3[:default] ..."
 
       desc "Inject roles list and `set_global_roles` method in the specified class"
 
@@ -19,14 +20,14 @@ module GlobalRoles
 
   # Global roles
   ROLES = #{roles_list}
-  setup_global_roles!
+  setup_global_roles!#{default_role}
 
 RUBY
         end
       end
 
       def setup_migration
-        invoke "active_record:install", [ name ]
+        invoke "active_record:install", [ name, fetch_default ]
       end
 
       protected
@@ -45,9 +46,18 @@ RUBY
       end
 
       def roles_list
-        (roles.empty? ? DEFAULT_ROLES : roles).map{ |r| r.to_sym }
+        roles.map{ |r| r.split(':').first.to_sym }
       end
 
+      def fetch_default
+        d = roles.map {|r| r.split(':') }.select {|r| r[1] == 'default'}
+        d.empty? ? -1 : roles_list.index(d[0].first.to_sym)
+      end
+
+      def default_role
+        a = fetch_default
+        (a == -1) ? '' : " default: :#{roles_list[a]}"
+      end
     end
   end
 end
