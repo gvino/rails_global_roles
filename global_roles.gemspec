@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["g-vino@yandex.ru", "g.vinogradov@itima.ru"]
   s.homepage    = "http://github.com/gvino/rails_global_roles"
   s.summary     = "Simple roles gem"
-  s.description = "Simple gem to provide global roles for ActiveRecrod models without using of another models"
+  s.description = "Simple gem to provide global roles for ActiveRecord models without using of another models"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
